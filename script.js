@@ -16,6 +16,9 @@ class Paper {
 
   init(paper) {
     const handleMove = (e) => {
+      // Prevent default touch behavior like scrolling
+      e.preventDefault();
+
       // For touch events, get the first touch point
       const clientX = e.clientX || (e.touches && e.touches[0].clientX);
       const clientY = e.clientY || (e.touches && e.touches[0].clientY);
@@ -51,7 +54,7 @@ class Paper {
     };
 
     document.addEventListener('mousemove', handleMove);
-    document.addEventListener('touchmove', handleMove);
+    document.addEventListener('touchmove', handleMove, { passive: false });
 
     const handleStart = (e) => {
       if(this.holdingPaper) return;
@@ -74,7 +77,7 @@ class Paper {
     };
 
     paper.addEventListener('mousedown', handleStart);
-    paper.addEventListener('touchstart', handleStart);
+    paper.addEventListener('touchstart', handleStart, { passive: false });
 
     const handleEnd = () => {
       this.holdingPaper = false;
